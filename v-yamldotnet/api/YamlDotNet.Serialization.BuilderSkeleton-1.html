@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>YamlDotNet documentation</title>
+
+    <script>
+
+        // use IIFE in order to avoid polluting global context with functions & variables
+        // https://developer.mozilla.org/en-US/docs/Glossary/IIFE
+        (function() {
+            const isLocalFile = location.protocol === "file:";
+            const defaultTheme = "dark";
+            const defaultLang = "csharp-lang";
+
+            if(isLocalFile){
+                const urlParams = new URLSearchParams(window.location.search);
+
+                let redirect = false;
+
+                // set 'theme' URL param if not found
+                if(!urlParams.has("theme")){
+                    urlParams.set("theme", defaultTheme);
+                    redirect = true;
+                }
+
+                // set 'lang' URL param if not found
+                if(!urlParams.has("lang")){
+                    urlParams.set("lang", defaultLang);
+                    redirect = true;
+                }
+
+                // redirect, if some of the URL parameters are missing
+                if(redirect){
+                    const newUrl = new URL(window.location.href);
+                    newUrl.search = urlParams.toString();
+
+                    window.location.href = newUrl;
+                }
+                else {
+                    document.documentElement.setAttribute("data-bs-theme", urlParams.get("theme")); // set the 'data-bs-theme' attribute
+                    document.documentElement.setAttribute("data-language", urlParams.get("lang")); // set the 'data-language' attribute
+                }
+            }
+            else { // no local file -> use localStorage
+                if (!localStorage.getItem("refdocgen-theme")) {
+                    localStorage.setItem("refdocgen-theme", defaultTheme);
+                }
+
+                if (!localStorage.getItem("refdocgen-language")) {
+                    localStorage.setItem("refdocgen-language", defaultLang);
+                }
+
+                document.documentElement.setAttribute("data-bs-theme", localStorage.getItem("refdocgen-theme")); // set the 'data-bs-theme' attribute
+                document.documentElement.setAttribute("data-language", localStorage.getItem("refdocgen-language")); // set the 'data-language' attribute
+            }
+        })();
+    </script>
+
+    
+    <link href="../Static/styles.css" rel="stylesheet" /><style>html[data-language="csharp-lang"] [data-language="csharp-lang"] { display: inline !important; }
+</style></head>
+
+<body><nav class="navbar navbar-expand-lg sticky-top menu-bg"><div class="container"><a class="navbar-brand" href="../index.html">YamlDotNet</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../api/index.html">API</a></li></ul>
+            <ul class="navbar-nav ms-auto"><li class="nav-item d-flex align-items-center"><form class="me-2 mb-2 mb-lg-0"><select class="form-select" id="language-selector" aria-label="language"><option class="lang-option" value="csharp-lang">C#</option></select></form></li>
+
+                
+                <li class="nav-item d-flex align-items-center"><form role="search" class="me-2"><input class="form-control" autocomplete="off" type="search" placeholder="Search" aria-label="Search" id="menu-search-bar" data-url-target="../search.html" readonly /></form></li>
+
+                
+                <li class="nav-item" id="theme-switcher"><button class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brightness-high" viewBox="0 0 16 16"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"></path></svg></button></li></ul></div></div></nav>
+
+    <div class="container my-4" data-id="page-body"><div data-id="declared-type-data"><div class="d-flex justify-content-between align-items-center"><h1 class="display-4 text-break" data-id="type-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public abstract class</span>
+<span class="refdocgen-text-primary">BuilderSkeleton</span><span>&lt;</span><span class="refdocgen-text-secondary">TBuilder</span><span>&gt;</span></span></samp></h1>
+
+    <button class="btn btn-sm" id="toggleAllBtn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path>
+        <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button>
+
+<script>
+    window.addEventListener('load', function(){
+        const toggleBtn = document.getElementById('toggleAllBtn');
+        const namespaces = Array.from(document.getElementsByClassName('multi-collapse'));
+
+        toggleBtn.addEventListener('click', () => {
+          const allShown = namespaces.every(ns => ns.classList.contains('show'));
+
+          namespaces.forEach(el => {
+            let instance = bootstrap.Collapse.getInstance(el);
+            if (!instance) {
+                // Ensure toggle: false to prevent auto-toggling on creation
+                instance = new bootstrap.Collapse(el, { toggle: false });
+            }
+
+            if (allShown) {
+              instance.hide(); // Collapse if all were shown
+            } else {
+              instance.show(); // Otherwise expand all
+            }
+          });
+        });
+    });
+</script></div>
+
+                        <span class="not-visible" data-language="csharp-lang"><h6 class="mx-3" data-id="type-param-constraints"><samp><span class="refdocgen-text-tertiary">where</span>
+            <span class="refdocgen-text-secondary">TBuilder</span>
+            <span> : </span>
+            <span class="refdocgen-text-tertiary"></span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.BuilderSkeleton-1.html" class="refdocgen-link-secondary">BuilderSkeleton</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary">TBuilder</span><span class="text-body-secondary">&gt;</span></samp></h6></span>
+
+                        <h6><samp data-id="type-assembly"><a href="YamlDotNet-DLL.html" class="refdocgen-link-secondary"><span class="refdocgen-text-tertiary">assembly</span>
+            <span class="refdocgen-text-secondary">YamlDotNet</span></a></samp></h6>
+
+                        <h6><samp data-id="type-namespace"><a href="YamlDotNet.Serialization.html" class="refdocgen-link-secondary text-break"><span class="refdocgen-text-tertiary">namespace</span>
+            <span class="refdocgen-text-secondary">YamlDotNet.Serialization</span></a></samp></h6>
+
+                        <div data-id="base-type"><i>Base type:&nbsp;</i>
+        <samp class="refdocgen-text-secondary text-break"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.object" class="refdocgen-link-secondary">object</a></span></span></samp></div>
+
+                        
+
+                        
+
+                        <hr>
+
+                        
+                        <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Common implementation of <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.SerializerBuilder.html">SerializerBuilder</a> and <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.DeserializerBuilder.html">DeserializerBuilder</a>.
+            </div></div><hr><div class="mt-3"><div class="lead">Type parameters</div>
+        <div class="mx-3" data-id="type-parameters-section"><div data-id="type-parameter-data"><samp data-id="type-parameter-declaration"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+                    <div class="text-body-secondary fst-italic mb-2" data-id="type-parameter-doc"></div></div></div></div>
+
+                        
+
+                        
+
+                        
+                        
+
+                        
+
+                        <hr></div><h2 class="display-5 mt-2">Methods</h2>
+<div class="row" data-id="methods-section"><div class="col-md-12"><div class="border px-2 py-1 mb-2" id="EnablePrivateConstructors" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">EnablePrivateConstructors</span><span>(</span><wbr><span>)</span></span>
+
+                            <a class="anchor-link" href="#EnablePrivateConstructors">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-0-collapse" aria-expanded="false" aria-controls="method-0-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-0-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Calling this will enable the support for private constructors when considering serialization and deserialization.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="IgnoreFields" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">IgnoreFields</span><span>(</span><wbr><span>)</span></span>
+
+                            <a class="anchor-link" href="#IgnoreFields">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-1-collapse" aria-expanded="false" aria-controls="method-1-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-1-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Prevents serialization and deserialization of fields.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="IncludeNonPublicProperties" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">IncludeNonPublicProperties</span><span>(</span><wbr><span>)</span></span>
+
+                            <a class="anchor-link" href="#IncludeNonPublicProperties">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-2-collapse" aria-expanded="false" aria-controls="method-2-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-2-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Allows serialization and deserialization of non-public properties.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithAttributeOverride--1(System.Linq.Expressions.Expression(System.Func(--0,System.Object)),System.Attribute)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithAttributeOverride</span><span>&lt;</span><span class="refdocgen-text-secondary">TClass</span><span>&gt;</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.linq.expressions.expression-1" class="refdocgen-link-secondary">Expression</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.func-2" class="refdocgen-link-secondary">Func</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary">TClass</span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.object" class="refdocgen-link-secondary">object</a></span><span class="text-body-secondary">&gt;</span><span class="text-body-secondary">&gt;</span><span>&#xA0;propertyAccessor</span><span>, </span>
+            <wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.attribute" class="refdocgen-link-secondary">Attribute</a></span><span>&#xA0;attribute</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithAttributeOverride--1(System.Linq.Expressions.Expression(System.Func(--0,System.Object)),System.Attribute)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-3-collapse" aria-expanded="false" aria-controls="method-3-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-3-collapse"><span class="not-visible" data-language="csharp-lang"></span>
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Register an <a class="refdocgen-see-cref" href="https://learn.microsoft.com/dotnet/api/system.attribute">Attribute</a> for a given property.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Type parameters</div>
+        <div class="mx-3" data-id="type-parameters-section"><div data-id="type-parameter-data"><samp data-id="type-parameter-declaration"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TClass</span></span></samp>
+                    <div class="text-body-secondary fst-italic mb-2" data-id="type-parameter-doc"></div></div></div></div>
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.linq.expressions.expression-1" class="refdocgen-link-secondary">Expression</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.func-2" class="refdocgen-link-secondary">Func</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary">TClass</span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.object" class="refdocgen-link-secondary">object</a></span><span class="text-body-secondary">&gt;</span><span class="text-body-secondary">&gt;</span><span>&#xA0;propertyAccessor</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>An expression in the form: x =&gt; x.SomeProperty</div></div></div><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.attribute" class="refdocgen-link-secondary">Attribute</a></span><span>&#xA0;attribute</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>The attribute to register.</div></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithAttributeOverride(System.Type,System.String,System.Attribute)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithAttributeOverride</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.type" class="refdocgen-link-secondary">Type</a></span><span>&#xA0;type</span><span>, </span>
+            <wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span><span>&#xA0;member</span><span>, </span>
+            <wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.attribute" class="refdocgen-link-secondary">Attribute</a></span><span>&#xA0;attribute</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithAttributeOverride(System.Type,System.String,System.Attribute)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-4-collapse" aria-expanded="false" aria-controls="method-4-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-4-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Register an <a class="refdocgen-see-cref" href="https://learn.microsoft.com/dotnet/api/system.attribute">Attribute</a> for a given property.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.type" class="refdocgen-link-secondary">Type</a></span><span>&#xA0;type</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"></div></div><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span><span>&#xA0;member</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"></div></div><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.attribute" class="refdocgen-link-secondary">Attribute</a></span><span>&#xA0;attribute</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithEnumNamingConvention(YamlDotNet.Serialization.INamingConvention)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithEnumNamingConvention</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.INamingConvention.html" class="refdocgen-link-secondary">INamingConvention</a></span><span>&#xA0;enumNamingConvention</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithEnumNamingConvention(YamlDotNet.Serialization.INamingConvention)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-5-collapse" aria-expanded="false" aria-controls="method-5-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-5-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Sets the <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.INamingConvention.html">INamingConvention</a> to use when handling enum's.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.INamingConvention.html" class="refdocgen-link-secondary">INamingConvention</a></span><span>&#xA0;enumNamingConvention</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>Naming convention to use when handling enum's</div></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithNamingConvention(YamlDotNet.Serialization.INamingConvention)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithNamingConvention</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.INamingConvention.html" class="refdocgen-link-secondary">INamingConvention</a></span><span>&#xA0;namingConvention</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithNamingConvention(YamlDotNet.Serialization.INamingConvention)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-6-collapse" aria-expanded="false" aria-controls="method-6-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-6-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Sets the <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.INamingConvention.html">INamingConvention</a> that will be used by the (de)serializer.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.INamingConvention.html" class="refdocgen-link-secondary">INamingConvention</a></span><span>&#xA0;namingConvention</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithoutTypeConverter--1" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithoutTypeConverter</span><span>&lt;</span><span class="refdocgen-text-secondary">TYamlTypeConverter</span><span>&gt;</span><span>(</span><wbr><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithoutTypeConverter--1">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-7-collapse" aria-expanded="false" aria-controls="method-7-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-7-collapse"><span class="not-visible" data-language="csharp-lang"><h6 class="mx-3" data-id="type-param-constraints"><samp><span class="refdocgen-text-tertiary">where</span>
+            <span class="refdocgen-text-secondary">TYamlTypeConverter</span>
+            <span> : </span>
+            <span class="refdocgen-text-tertiary"></span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span></samp></h6></span>
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Unregisters an existing <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.IYamlTypeConverter.html">IYamlTypeConverter</a> of type <div></div>.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Type parameters</div>
+        <div class="mx-3" data-id="type-parameters-section"><div data-id="type-parameter-data"><samp data-id="type-parameter-declaration"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TYamlTypeConverter</span></span></samp>
+                    <div class="text-body-secondary fst-italic mb-2" data-id="type-parameter-doc"></div></div></div></div>
+
+                    <div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithoutTypeConverter(System.Type)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithoutTypeConverter</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.type" class="refdocgen-link-secondary">Type</a></span><span>&#xA0;converterType</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithoutTypeConverter(System.Type)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-8-collapse" aria-expanded="false" aria-controls="method-8-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-8-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Unregisters an existing <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.IYamlTypeConverter.html">IYamlTypeConverter</a> of type <div></div>.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.type" class="refdocgen-link-secondary">Type</a></span><span>&#xA0;converterType</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithoutTypeInspector--1" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithoutTypeInspector</span><span>&lt;</span><span class="refdocgen-text-secondary">TTypeInspector</span><span>&gt;</span><span>(</span><wbr><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithoutTypeInspector--1">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-9-collapse" aria-expanded="false" aria-controls="method-9-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-9-collapse"><span class="not-visible" data-language="csharp-lang"><h6 class="mx-3" data-id="type-param-constraints"><samp><span class="refdocgen-text-tertiary">where</span>
+            <span class="refdocgen-text-secondary">TTypeInspector</span>
+            <span> : </span>
+            <span class="refdocgen-text-tertiary"></span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span></samp></h6></span>
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Unregisters an existing <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.ITypeInspector.html">ITypeInspector</a> of type <div></div>.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Type parameters</div>
+        <div class="mx-3" data-id="type-parameters-section"><div data-id="type-parameter-data"><samp data-id="type-parameter-declaration"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TTypeInspector</span></span></samp>
+                    <div class="text-body-secondary fst-italic mb-2" data-id="type-parameter-doc"></div></div></div></div>
+
+                    <div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithoutTypeInspector(System.Type)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithoutTypeInspector</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.type" class="refdocgen-link-secondary">Type</a></span><span>&#xA0;inspectorType</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithoutTypeInspector(System.Type)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-10-collapse" aria-expanded="false" aria-controls="method-10-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-10-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Unregisters an existing <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.ITypeInspector.html">ITypeInspector</a> of type <div></div>.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.type" class="refdocgen-link-secondary">Type</a></span><span>&#xA0;inspectorType</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithTagMapping(YamlDotNet.Core.TagName,System.Type)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public abstract</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithTagMapping</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Core.TagName.html" class="refdocgen-link-secondary">TagName</a></span><span>&#xA0;tag</span><span>, </span>
+            <wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.type" class="refdocgen-link-secondary">Type</a></span><span>&#xA0;type</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithTagMapping(YamlDotNet.Core.TagName,System.Type)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-11-collapse" aria-expanded="false" aria-controls="method-11-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-11-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Core.TagName.html" class="refdocgen-link-secondary">TagName</a></span><span>&#xA0;tag</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"></div></div><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.type" class="refdocgen-link-secondary">Type</a></span><span>&#xA0;type</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithTypeConverter(YamlDotNet.Serialization.IYamlTypeConverter)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithTypeConverter</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span><span>&#xA0;typeConverter</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithTypeConverter(YamlDotNet.Serialization.IYamlTypeConverter)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-12-collapse" aria-expanded="false" aria-controls="method-12-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-12-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Registers an additional <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.IYamlTypeConverter.html">IYamlTypeConverter</a> to be used by the (de)serializer.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span><span>&#xA0;typeConverter</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithTypeConverter(YamlDotNet.Serialization.IYamlTypeConverter,System.Action(YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax(YamlDotNet.Serialization.IYamlTypeConverter)))" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithTypeConverter</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span><span>&#xA0;typeConverter</span><span>, </span>
+            <wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.action-1" class="refdocgen-link-secondary">Action</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax-1.html" class="refdocgen-link-secondary">IRegistrationLocationSelectionSyntax</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span><span class="text-body-secondary">&gt;</span><span class="text-body-secondary">&gt;</span><span>&#xA0;where</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithTypeConverter(YamlDotNet.Serialization.IYamlTypeConverter,System.Action(YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax(YamlDotNet.Serialization.IYamlTypeConverter)))">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-13-collapse" aria-expanded="false" aria-controls="method-13-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-13-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Registers an additional <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.IYamlTypeConverter.html">IYamlTypeConverter</a> to be used by the (de)serializer.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span><span>&#xA0;typeConverter</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"></div></div><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.action-1" class="refdocgen-link-secondary">Action</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax-1.html" class="refdocgen-link-secondary">IRegistrationLocationSelectionSyntax</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span><span class="text-body-secondary">&gt;</span><span class="text-body-secondary">&gt;</span><span>&#xA0;where</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>Configures the location where to insert the <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.IYamlTypeConverter.html">IYamlTypeConverter</a></div></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithTypeConverter--1(YamlDotNet.Serialization.WrapperFactory(YamlDotNet.Serialization.IYamlTypeConverter,YamlDotNet.Serialization.IYamlTypeConverter),System.Action(YamlDotNet.Serialization.ITrackingRegistrationLocationSelectionSyntax(YamlDotNet.Serialization.IYamlTypeConverter)))" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithTypeConverter</span><span>&lt;</span><span class="refdocgen-text-secondary">TYamlTypeConverter</span><span>&gt;</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.WrapperFactory-2.html" class="refdocgen-link-secondary">WrapperFactory</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span><span class="text-body-secondary">&gt;</span><span>&#xA0;typeConverterFactory</span><span>, </span>
+            <wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.action-1" class="refdocgen-link-secondary">Action</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITrackingRegistrationLocationSelectionSyntax-1.html" class="refdocgen-link-secondary">ITrackingRegistrationLocationSelectionSyntax</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span><span class="text-body-secondary">&gt;</span><span class="text-body-secondary">&gt;</span><span>&#xA0;where</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithTypeConverter--1(YamlDotNet.Serialization.WrapperFactory(YamlDotNet.Serialization.IYamlTypeConverter,YamlDotNet.Serialization.IYamlTypeConverter),System.Action(YamlDotNet.Serialization.ITrackingRegistrationLocationSelectionSyntax(YamlDotNet.Serialization.IYamlTypeConverter)))">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-14-collapse" aria-expanded="false" aria-controls="method-14-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-14-collapse"><span class="not-visible" data-language="csharp-lang"><h6 class="mx-3" data-id="type-param-constraints"><samp><span class="refdocgen-text-tertiary">where</span>
+            <span class="refdocgen-text-secondary">TYamlTypeConverter</span>
+            <span> : </span>
+            <span class="refdocgen-text-tertiary"></span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span></samp></h6></span>
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Registers an additional <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.IYamlTypeConverter.html">IYamlTypeConverter</a> to be used by the (de)serializer.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Type parameters</div>
+        <div class="mx-3" data-id="type-parameters-section"><div data-id="type-parameter-data"><samp data-id="type-parameter-declaration"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TYamlTypeConverter</span></span></samp>
+                    <div class="text-body-secondary fst-italic mb-2" data-id="type-parameter-doc"></div></div></div></div>
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.WrapperFactory-2.html" class="refdocgen-link-secondary">WrapperFactory</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span><span class="text-body-secondary">&gt;</span><span>&#xA0;typeConverterFactory</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>A factory that creates the <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.IYamlTypeConverter.html">IYamlTypeConverter</a> based on a previously registered <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.IYamlTypeConverter.html">IYamlTypeConverter</a>.</div></div></div><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.action-1" class="refdocgen-link-secondary">Action</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITrackingRegistrationLocationSelectionSyntax-1.html" class="refdocgen-link-secondary">ITrackingRegistrationLocationSelectionSyntax</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IYamlTypeConverter.html" class="refdocgen-link-secondary">IYamlTypeConverter</a></span><span class="text-body-secondary">&gt;</span><span class="text-body-secondary">&gt;</span><span>&#xA0;where</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>Configures the location where to insert the <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.IYamlTypeConverter.html">IYamlTypeConverter</a></div></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithTypeInspector--1(System.Func(YamlDotNet.Serialization.ITypeInspector,--0))" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithTypeInspector</span><span>&lt;</span><span class="refdocgen-text-secondary">TTypeInspector</span><span>&gt;</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.func-2" class="refdocgen-link-secondary">Func</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary">TTypeInspector</span><span class="text-body-secondary">&gt;</span><span>&#xA0;typeInspectorFactory</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithTypeInspector--1(System.Func(YamlDotNet.Serialization.ITypeInspector,--0))">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-15-collapse" aria-expanded="false" aria-controls="method-15-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-15-collapse"><span class="not-visible" data-language="csharp-lang"><h6 class="mx-3" data-id="type-param-constraints"><samp><span class="refdocgen-text-tertiary">where</span>
+            <span class="refdocgen-text-secondary">TTypeInspector</span>
+            <span> : </span>
+            <span class="refdocgen-text-tertiary"></span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span></samp></h6></span>
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Registers an additional <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.ITypeInspector.html">ITypeInspector</a> to be used by the (de)serializer.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Type parameters</div>
+        <div class="mx-3" data-id="type-parameters-section"><div data-id="type-parameter-data"><samp data-id="type-parameter-declaration"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TTypeInspector</span></span></samp>
+                    <div class="text-body-secondary fst-italic mb-2" data-id="type-parameter-doc"></div></div></div></div>
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.func-2" class="refdocgen-link-secondary">Func</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary">TTypeInspector</span><span class="text-body-secondary">&gt;</span><span>&#xA0;typeInspectorFactory</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>A function that instantiates the type inspector.</div></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithTypeInspector--1(System.Func(YamlDotNet.Serialization.ITypeInspector,--0),System.Action(YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax(YamlDotNet.Serialization.ITypeInspector)))" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithTypeInspector</span><span>&lt;</span><span class="refdocgen-text-secondary">TTypeInspector</span><span>&gt;</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.func-2" class="refdocgen-link-secondary">Func</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary">TTypeInspector</span><span class="text-body-secondary">&gt;</span><span>&#xA0;typeInspectorFactory</span><span>, </span>
+            <wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.action-1" class="refdocgen-link-secondary">Action</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax-1.html" class="refdocgen-link-secondary">IRegistrationLocationSelectionSyntax</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span><span class="text-body-secondary">&gt;</span><span class="text-body-secondary">&gt;</span><span>&#xA0;where</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithTypeInspector--1(System.Func(YamlDotNet.Serialization.ITypeInspector,--0),System.Action(YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax(YamlDotNet.Serialization.ITypeInspector)))">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-16-collapse" aria-expanded="false" aria-controls="method-16-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-16-collapse"><span class="not-visible" data-language="csharp-lang"><h6 class="mx-3" data-id="type-param-constraints"><samp><span class="refdocgen-text-tertiary">where</span>
+            <span class="refdocgen-text-secondary">TTypeInspector</span>
+            <span> : </span>
+            <span class="refdocgen-text-tertiary"></span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span></samp></h6></span>
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Registers an additional <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.ITypeInspector.html">ITypeInspector</a> to be used by the (de)serializer.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Type parameters</div>
+        <div class="mx-3" data-id="type-parameters-section"><div data-id="type-parameter-data"><samp data-id="type-parameter-declaration"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TTypeInspector</span></span></samp>
+                    <div class="text-body-secondary fst-italic mb-2" data-id="type-parameter-doc"></div></div></div></div>
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.func-2" class="refdocgen-link-secondary">Func</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary">TTypeInspector</span><span class="text-body-secondary">&gt;</span><span>&#xA0;typeInspectorFactory</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>A function that instantiates the type inspector.</div></div></div><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.action-1" class="refdocgen-link-secondary">Action</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.IRegistrationLocationSelectionSyntax-1.html" class="refdocgen-link-secondary">IRegistrationLocationSelectionSyntax</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span><span class="text-body-secondary">&gt;</span><span class="text-body-secondary">&gt;</span><span>&#xA0;where</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>Configures the location where to insert the <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.ITypeInspector.html">ITypeInspector</a></div></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithTypeInspector--1(YamlDotNet.Serialization.WrapperFactory(YamlDotNet.Serialization.ITypeInspector,YamlDotNet.Serialization.ITypeInspector,--0),System.Action(YamlDotNet.Serialization.ITrackingRegistrationLocationSelectionSyntax(YamlDotNet.Serialization.ITypeInspector)))" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithTypeInspector</span><span>&lt;</span><span class="refdocgen-text-secondary">TTypeInspector</span><span>&gt;</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.WrapperFactory-3.html" class="refdocgen-link-secondary">WrapperFactory</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary">TTypeInspector</span><span class="text-body-secondary">&gt;</span><span>&#xA0;typeInspectorFactory</span><span>, </span>
+            <wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.action-1" class="refdocgen-link-secondary">Action</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITrackingRegistrationLocationSelectionSyntax-1.html" class="refdocgen-link-secondary">ITrackingRegistrationLocationSelectionSyntax</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span><span class="text-body-secondary">&gt;</span><span class="text-body-secondary">&gt;</span><span>&#xA0;where</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithTypeInspector--1(YamlDotNet.Serialization.WrapperFactory(YamlDotNet.Serialization.ITypeInspector,YamlDotNet.Serialization.ITypeInspector,--0),System.Action(YamlDotNet.Serialization.ITrackingRegistrationLocationSelectionSyntax(YamlDotNet.Serialization.ITypeInspector)))">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-17-collapse" aria-expanded="false" aria-controls="method-17-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-17-collapse"><span class="not-visible" data-language="csharp-lang"><h6 class="mx-3" data-id="type-param-constraints"><samp><span class="refdocgen-text-tertiary">where</span>
+            <span class="refdocgen-text-secondary">TTypeInspector</span>
+            <span> : </span>
+            <span class="refdocgen-text-tertiary"></span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span></samp></h6></span>
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Registers an additional <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.ITypeInspector.html">ITypeInspector</a> to be used by the (de)serializer.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Type parameters</div>
+        <div class="mx-3" data-id="type-parameters-section"><div data-id="type-parameter-data"><samp data-id="type-parameter-declaration"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TTypeInspector</span></span></samp>
+                    <div class="text-body-secondary fst-italic mb-2" data-id="type-parameter-doc"></div></div></div></div>
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.WrapperFactory-3.html" class="refdocgen-link-secondary">WrapperFactory</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary">TTypeInspector</span><span class="text-body-secondary">&gt;</span><span>&#xA0;typeInspectorFactory</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>A function that instantiates the type inspector based on a previously registered <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.ITypeInspector.html">ITypeInspector</a>..</div></div></div><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.action-1" class="refdocgen-link-secondary">Action</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITrackingRegistrationLocationSelectionSyntax-1.html" class="refdocgen-link-secondary">ITrackingRegistrationLocationSelectionSyntax</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeInspector.html" class="refdocgen-link-secondary">ITypeInspector</a></span><span class="text-body-secondary">&gt;</span><span class="text-body-secondary">&gt;</span><span>&#xA0;where</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>Configures the location where to insert the <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.ITypeInspector.html">ITypeInspector</a></div></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithTypeResolver(YamlDotNet.Serialization.ITypeResolver)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithTypeResolver</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeResolver.html" class="refdocgen-link-secondary">ITypeResolver</a></span><span>&#xA0;typeResolver</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithTypeResolver(YamlDotNet.Serialization.ITypeResolver)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-18-collapse" aria-expanded="false" aria-controls="method-18-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-18-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Sets the <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.ITypeResolver.html">ITypeResolver</a> that will be used by the (de)serializer.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.ITypeResolver.html" class="refdocgen-link-secondary">ITypeResolver</a></span><span>&#xA0;typeResolver</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WithYamlFormatter(YamlDotNet.Serialization.YamlFormatter)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary">TBuilder</span>
+
+<span class="refdocgen-text-primary">WithYamlFormatter</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.YamlFormatter.html" class="refdocgen-link-secondary">YamlFormatter</a></span><span>&#xA0;formatter</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WithYamlFormatter(YamlDotNet.Serialization.YamlFormatter)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-19-collapse" aria-expanded="false" aria-controls="method-19-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-19-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Override the default yaml formatter with the one passed in
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./YamlDotNet.Serialization.YamlFormatter.html" class="refdocgen-link-secondary">YamlFormatter</a></span><span>&#xA0;formatter</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>
+  <a class="refdocgen-see-cref" href="./YamlDotNet.Serialization.YamlFormatter.html">YamlFormatter</a>to use when serializing and deserializing objects.</div></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary">TBuilder</span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"></div></div></div>
+
+                    
+                    
+
+                    
+
+                    <div class="mt-3"><div class="lead">Exceptions</div>
+        <div class="mx-3" data-id="exception-section"><div data-id="exception-data"><samp data-id="exception-type" class="text-break"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception" class="refdocgen-link-secondary"><span class="not-visible" data-language="csharp-lang">ArgumentNullException</span></a></span></samp>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="exception-doc"></div></div></div></div>
+
+                    
+
+                    <div class="mt-1"></div></div></div></div></div></div><nav class="navbar fixed-bottom menu-bg"><div class="container"><div class="dropup"><button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">v-yamldotnet</button>
+            <div id="current-version">v-yamldotnet</div>
+            <div id="version-list">[&quot;v-yamldotnet&quot;]</div>
+            <ul class="dropdown-menu" id="version-selector" data-id="version-selector"></ul></div></div></nav><script src="../Static/bootstrap-5.3.5-dist.bundle.min.js"></script>
+
+    
+    <script src="../Static/script.js"></script></body></html>

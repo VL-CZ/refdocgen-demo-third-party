@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Newtonsoft.Json documentation</title>
+
+    <script>
+
+        // use IIFE in order to avoid polluting global context with functions & variables
+        // https://developer.mozilla.org/en-US/docs/Glossary/IIFE
+        (function() {
+            const isLocalFile = location.protocol === "file:";
+            const defaultTheme = "dark";
+            const defaultLang = "csharp-lang";
+
+            if(isLocalFile){
+                const urlParams = new URLSearchParams(window.location.search);
+
+                let redirect = false;
+
+                // set 'theme' URL param if not found
+                if(!urlParams.has("theme")){
+                    urlParams.set("theme", defaultTheme);
+                    redirect = true;
+                }
+
+                // set 'lang' URL param if not found
+                if(!urlParams.has("lang")){
+                    urlParams.set("lang", defaultLang);
+                    redirect = true;
+                }
+
+                // redirect, if some of the URL parameters are missing
+                if(redirect){
+                    const newUrl = new URL(window.location.href);
+                    newUrl.search = urlParams.toString();
+
+                    window.location.href = newUrl;
+                }
+                else {
+                    document.documentElement.setAttribute("data-bs-theme", urlParams.get("theme")); // set the 'data-bs-theme' attribute
+                    document.documentElement.setAttribute("data-language", urlParams.get("lang")); // set the 'data-language' attribute
+                }
+            }
+            else { // no local file -> use localStorage
+                if (!localStorage.getItem("refdocgen-theme")) {
+                    localStorage.setItem("refdocgen-theme", defaultTheme);
+                }
+
+                if (!localStorage.getItem("refdocgen-language")) {
+                    localStorage.setItem("refdocgen-language", defaultLang);
+                }
+
+                document.documentElement.setAttribute("data-bs-theme", localStorage.getItem("refdocgen-theme")); // set the 'data-bs-theme' attribute
+                document.documentElement.setAttribute("data-language", localStorage.getItem("refdocgen-language")); // set the 'data-language' attribute
+            }
+        })();
+    </script>
+
+    
+    <link href="../Static/styles.css" rel="stylesheet" /><style>html[data-language="csharp-lang"] [data-language="csharp-lang"] { display: inline !important; }
+</style></head>
+
+<body><nav class="navbar navbar-expand-lg sticky-top menu-bg"><div class="container"><a class="navbar-brand" href="../index.html">Newtonsoft.Json</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup"><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../api/index.html">API</a></li></ul>
+            <ul class="navbar-nav ms-auto"><li class="nav-item d-flex align-items-center"><form class="me-2 mb-2 mb-lg-0"><select class="form-select" id="language-selector" aria-label="language"><option class="lang-option" value="csharp-lang">C#</option></select></form></li>
+
+                
+                <li class="nav-item d-flex align-items-center"><form role="search" class="me-2"><input class="form-control" autocomplete="off" type="search" placeholder="Search" aria-label="Search" id="menu-search-bar" data-url-target="../search.html" readonly /></form></li>
+
+                
+                <li class="nav-item" id="theme-switcher"><button class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brightness-high" viewBox="0 0 16 16"><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"></path></svg></button></li></ul></div></div></nav>
+
+    <div class="container my-4" data-id="page-body"><div data-id="declared-type-data"><div class="d-flex justify-content-between align-items-center"><h1 class="display-4 text-break" data-id="type-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public class</span>
+<span class="refdocgen-text-primary">JsonSchema</span></span></samp></h1>
+
+    <button class="btn btn-sm" id="toggleAllBtn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path>
+        <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button>
+
+<script>
+    window.addEventListener('load', function(){
+        const toggleBtn = document.getElementById('toggleAllBtn');
+        const namespaces = Array.from(document.getElementsByClassName('multi-collapse'));
+
+        toggleBtn.addEventListener('click', () => {
+          const allShown = namespaces.every(ns => ns.classList.contains('show'));
+
+          namespaces.forEach(el => {
+            let instance = bootstrap.Collapse.getInstance(el);
+            if (!instance) {
+                // Ensure toggle: false to prevent auto-toggling on creation
+                instance = new bootstrap.Collapse(el, { toggle: false });
+            }
+
+            if (allShown) {
+              instance.hide(); // Collapse if all were shown
+            } else {
+              instance.show(); // Otherwise expand all
+            }
+          });
+        });
+    });
+</script></div>
+
+                        
+
+                        <h6><samp data-id="type-assembly"><a href="Newtonsoft.Json-DLL.html" class="refdocgen-link-secondary"><span class="refdocgen-text-tertiary">assembly</span>
+            <span class="refdocgen-text-secondary">Newtonsoft.Json</span></a></samp></h6>
+
+                        <h6><samp data-id="type-namespace"><a href="Newtonsoft.Json.Schema.html" class="refdocgen-link-secondary text-break"><span class="refdocgen-text-tertiary">namespace</span>
+            <span class="refdocgen-text-secondary">Newtonsoft.Json.Schema</span></a></samp></h6>
+
+                        <div data-id="base-type"><i>Base type:&nbsp;</i>
+        <samp class="refdocgen-text-secondary text-break"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.object" class="refdocgen-link-secondary">object</a></span></span></samp></div>
+
+                        
+
+                        
+
+                        <hr>
+
+                        
+                        <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            <div class="refdocgen-paragraph">
+            An in-memory representation of a JSON Schema.
+            </div>
+            <note type="caution">
+            JSON Schema validation has been moved to its own package. See <a class="refdocgen-see-href" href="https://www.newtonsoft.com/jsonschema">https://www.newtonsoft.com/jsonschema</a> for more details.
+            </note>
+            </div></div><hr>
+
+                        <div class="mt-3"><div class="lead">Attributes</div>
+        <div class="mx-3" data-id="attributes-section"><div data-id="attribute-data" class="text-break"><samp><span class="not-visible" data-language="csharp-lang">
+
+[<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.obsoleteattribute" class="refdocgen-link-secondary">Obsolete</a></span><span>(</span><span class="refdocgen-text-green">&quot;JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.&quot;</span><span>)</span><span>]</span></span></samp></div></div></div>
+
+                        
+
+                        
+                        
+
+                        
+
+                        <hr></div><h2 class="display-5 mt-2">Constructors</h2>
+<div class="row" data-id="constructors-section"><div class="col-md-12"><div class="border px-2 py-1 mb-2" id=".ctor" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+<span class="refdocgen-text-primary">JsonSchema</span><span>(</span><wbr><span>)</span></span>
+
+                            <a class="anchor-link" href="#.ctor">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#ctor-0-collapse" aria-expanded="false" aria-controls="ctor-0-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="ctor-0-collapse"><div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Initializes a new instance of the <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> class.
+            </div></div>
+
+                    
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div></div></div><h2 class="display-5 mt-2">Properties</h2>
+<div class="row" data-id="properties-section"><div class="col-md-12"><div class="border px-2 py-1 mb-2" id="AdditionalItems" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span>
+
+<span class="refdocgen-text-primary">AdditionalItems</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#AdditionalItems">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-0-collapse" aria-expanded="false" aria-controls="property-0-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-0-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> of additional items.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> of additional items.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="AdditionalProperties" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span>
+
+<span class="refdocgen-text-primary">AdditionalProperties</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#AdditionalProperties">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-1-collapse" aria-expanded="false" aria-controls="property-1-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-1-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> of additional properties.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> of additional properties.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="AllowAdditionalItems" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.boolean" class="refdocgen-link-secondary">bool</a></span>
+
+<span class="refdocgen-text-primary">AllowAdditionalItems</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#AllowAdditionalItems">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-2-collapse" aria-expanded="false" aria-controls="property-2-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-2-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets a value indicating whether additional items are allowed.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>
+            	<code class="refdocgen-inline-code">true</code> if additional items are allowed; otherwise, <code class="refdocgen-inline-code">false</code>.
+            </div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="AllowAdditionalProperties" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.boolean" class="refdocgen-link-secondary">bool</a></span>
+
+<span class="refdocgen-text-primary">AllowAdditionalProperties</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#AllowAdditionalProperties">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-3-collapse" aria-expanded="false" aria-controls="property-3-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-3-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets a value indicating whether additional properties are allowed.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>
+            	<code class="refdocgen-inline-code">true</code> if additional properties are allowed; otherwise, <code class="refdocgen-inline-code">false</code>.
+            </div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Default" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Linq.JToken.html" class="refdocgen-link-secondary">JToken</a></span>
+
+<span class="refdocgen-text-primary">Default</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Default">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-4-collapse" aria-expanded="false" aria-controls="property-4-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-4-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the default value.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The default value.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Description" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span>
+
+<span class="refdocgen-text-primary">Description</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Description">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-5-collapse" aria-expanded="false" aria-controls="property-5-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-5-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the description of the object.
+            </div></div>
+
+                    
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Disallow" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchemaType.html" class="refdocgen-link-secondary">JsonSchemaType</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">Disallow</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Disallow">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-6-collapse" aria-expanded="false" aria-controls="property-6-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-6-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets disallowed types.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The disallowed types.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="DivisibleBy" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.double" class="refdocgen-link-secondary">double</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">DivisibleBy</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#DivisibleBy">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-7-collapse" aria-expanded="false" aria-controls="property-7-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-7-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets a number that the value should be divisible by.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>A number that the value should be divisible by.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Enum" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1" class="refdocgen-link-secondary">IList</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Linq.JToken.html" class="refdocgen-link-secondary">JToken</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">Enum</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Enum">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-8-collapse" aria-expanded="false" aria-controls="property-8-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-8-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the a collection of valid enum values allowed.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>A collection of valid enum values allowed.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="ExclusiveMaximum" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.boolean" class="refdocgen-link-secondary">bool</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">ExclusiveMaximum</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#ExclusiveMaximum">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-9-collapse" aria-expanded="false" aria-controls="property-9-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-9-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets a flag indicating whether the value can not equal the number defined by the <code class="refdocgen-inline-code">maximum</code> attribute (<a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html#Maximum">JsonSchema.Maximum</a>).
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>A flag indicating whether the value can not equal the number defined by the <code class="refdocgen-inline-code">maximum</code> attribute (<a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html#Maximum">JsonSchema.Maximum</a>).</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="ExclusiveMinimum" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.boolean" class="refdocgen-link-secondary">bool</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">ExclusiveMinimum</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#ExclusiveMinimum">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-10-collapse" aria-expanded="false" aria-controls="property-10-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-10-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets a flag indicating whether the value can not equal the number defined by the <code class="refdocgen-inline-code">minimum</code> attribute (<a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html#Minimum">JsonSchema.Minimum</a>).
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>A flag indicating whether the value can not equal the number defined by the <code class="refdocgen-inline-code">minimum</code> attribute (<a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html#Minimum">JsonSchema.Minimum</a>).</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Extends" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1" class="refdocgen-link-secondary">IList</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">Extends</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Extends">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-11-collapse" aria-expanded="false" aria-controls="property-11-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-11-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the collection of <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> that this schema extends.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The collection of <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> that this schema extends.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Format" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span>
+
+<span class="refdocgen-text-primary">Format</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Format">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-12-collapse" aria-expanded="false" aria-controls="property-12-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-12-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the format.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The format.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Hidden" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.boolean" class="refdocgen-link-secondary">bool</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">Hidden</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Hidden">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-13-collapse" aria-expanded="false" aria-controls="property-13-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-13-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets whether the object is visible to users.
+            </div></div>
+
+                    
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Id" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span>
+
+<span class="refdocgen-text-primary">Id</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Id">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-14-collapse" aria-expanded="false" aria-controls="property-14-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-14-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the id.
+            </div></div>
+
+                    
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Items" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ilist-1" class="refdocgen-link-secondary">IList</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">Items</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Items">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-15-collapse" aria-expanded="false" aria-controls="property-15-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-15-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> of items.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> of items.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Maximum" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.double" class="refdocgen-link-secondary">double</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">Maximum</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Maximum">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-16-collapse" aria-expanded="false" aria-controls="property-16-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-16-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the maximum.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The maximum.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="MaximumItems" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.int32" class="refdocgen-link-secondary">int</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">MaximumItems</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#MaximumItems">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-17-collapse" aria-expanded="false" aria-controls="property-17-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-17-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the maximum number of items.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The maximum number of items.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="MaximumLength" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.int32" class="refdocgen-link-secondary">int</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">MaximumLength</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#MaximumLength">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-18-collapse" aria-expanded="false" aria-controls="property-18-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-18-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the maximum length.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The maximum length.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Minimum" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.double" class="refdocgen-link-secondary">double</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">Minimum</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Minimum">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-19-collapse" aria-expanded="false" aria-controls="property-19-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-19-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the minimum.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The minimum.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="MinimumItems" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.int32" class="refdocgen-link-secondary">int</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">MinimumItems</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#MinimumItems">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-20-collapse" aria-expanded="false" aria-controls="property-20-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-20-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the minimum number of items.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The minimum number of items.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="MinimumLength" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.int32" class="refdocgen-link-secondary">int</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">MinimumLength</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#MinimumLength">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-21-collapse" aria-expanded="false" aria-controls="property-21-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-21-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the minimum length.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The minimum length.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Pattern" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span>
+
+<span class="refdocgen-text-primary">Pattern</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Pattern">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-22-collapse" aria-expanded="false" aria-controls="property-22-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-22-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the pattern.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The pattern.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="PatternProperties" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.collections.generic.idictionary-2" class="refdocgen-link-secondary">IDictionary</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">PatternProperties</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#PatternProperties">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-23-collapse" aria-expanded="false" aria-controls="property-23-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-23-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the pattern properties.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The pattern properties.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="PositionalItemsValidation" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.boolean" class="refdocgen-link-secondary">bool</a></span>
+
+<span class="refdocgen-text-primary">PositionalItemsValidation</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#PositionalItemsValidation">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-24-collapse" aria-expanded="false" aria-controls="property-24-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-24-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets a value indicating whether items in an array are validated using the <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> instance at their array position from <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html#Items">JsonSchema.Items</a>.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>
+            	<code class="refdocgen-inline-code">true</code> if items are validated using their array position; otherwise, <code class="refdocgen-inline-code">false</code>.
+            </div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Properties" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.collections.generic.idictionary-2" class="refdocgen-link-secondary">IDictionary</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span><span class="text-body-secondary">, </span><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">Properties</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Properties">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-25-collapse" aria-expanded="false" aria-controls="property-25-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-25-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> of properties.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> of properties.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="ReadOnly" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.boolean" class="refdocgen-link-secondary">bool</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">ReadOnly</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#ReadOnly">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-26-collapse" aria-expanded="false" aria-controls="property-26-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-26-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets whether the object is read-only.
+            </div></div>
+
+                    
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Required" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.boolean" class="refdocgen-link-secondary">bool</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">Required</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Required">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-27-collapse" aria-expanded="false" aria-controls="property-27-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-27-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets whether the object is required.
+            </div></div>
+
+                    
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Requires" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span>
+
+<span class="refdocgen-text-primary">Requires</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Requires">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-28-collapse" aria-expanded="false" aria-controls="property-28-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-28-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the required property if this property is present.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The required property if this property is present.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Title" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span>
+
+<span class="refdocgen-text-primary">Title</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Title">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-29-collapse" aria-expanded="false" aria-controls="property-29-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-29-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the title.
+            </div></div>
+
+                    
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Transient" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.boolean" class="refdocgen-link-secondary">bool</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">Transient</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Transient">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-30-collapse" aria-expanded="false" aria-controls="property-30-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-30-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets whether the object is transient.
+            </div></div>
+
+                    
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Type" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.nullable-1" class="refdocgen-link-secondary">Nullable</a></span><span class="text-body-secondary">&lt;</span><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchemaType.html" class="refdocgen-link-secondary">JsonSchemaType</a></span><span class="text-body-secondary">&gt;</span>
+
+<span class="refdocgen-text-primary">Type</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#Type">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-31-collapse" aria-expanded="false" aria-controls="property-31-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-31-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets the types of values allowed by the object.
+            </div></div>
+
+                    <div class="mt-3"><div class="lead">Value</div>
+        <div data-id="value-doc" class="fst-italic text-body-secondary"><div>The type.</div></div></div>
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="UniqueItems" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.boolean" class="refdocgen-link-secondary">bool</a></span>
+
+<span class="refdocgen-text-primary">UniqueItems</span>
+
+<span> { </span><span class="refdocgen-text-tertiary"> get<span class="text-body">; </span></span><span class="refdocgen-text-tertiary"> set<span class="text-body">; </span></span><span> }</span>
+
+</span>
+
+                            <a class="anchor-link" href="#UniqueItems">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#property-32-collapse" aria-expanded="false" aria-controls="property-32-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="property-32-collapse">
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Gets or sets whether the array items must be unique.
+            </div></div>
+
+                    
+
+                    
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div></div></div><h2 class="display-5 mt-2">Methods</h2>
+<div class="row" data-id="methods-section"><div class="col-md-12"><div class="border px-2 py-1 mb-2" id="Parse(System.String)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public static</span>
+
+<span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span>
+
+<span class="refdocgen-text-primary">Parse</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span><span>&#xA0;json</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#Parse(System.String)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-0-collapse" aria-expanded="false" aria-controls="method-0-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-0-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Load a <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> from a string that contains JSON Schema.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span><span>&#xA0;json</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>A <a class="refdocgen-see-cref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> that contains JSON Schema.</div></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"><div>A <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> populated from the string that contains JSON Schema.</div></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Parse(System.String,Newtonsoft.Json.Schema.JsonSchemaResolver)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public static</span>
+
+<span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span>
+
+<span class="refdocgen-text-primary">Parse</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span><span>&#xA0;json</span><span>, </span>
+            <wbr><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchemaResolver.html" class="refdocgen-link-secondary">JsonSchemaResolver</a></span><span>&#xA0;resolver</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#Parse(System.String,Newtonsoft.Json.Schema.JsonSchemaResolver)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-1-collapse" aria-expanded="false" aria-controls="method-1-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-1-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Load a <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> from a string that contains JSON Schema using the specified <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchemaResolver.html">JsonSchemaResolver</a>.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span><span>&#xA0;json</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>A <a class="refdocgen-see-cref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> that contains JSON Schema.</div></div></div><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchemaResolver.html" class="refdocgen-link-secondary">JsonSchemaResolver</a></span><span>&#xA0;resolver</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>The resolver.</div></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"><div>A <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> populated from the string that contains JSON Schema.</div></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Read(Newtonsoft.Json.JsonReader)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public static</span>
+
+<span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span>
+
+<span class="refdocgen-text-primary">Read</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.JsonReader.html" class="refdocgen-link-secondary">JsonReader</a></span><span>&#xA0;reader</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#Read(Newtonsoft.Json.JsonReader)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-2-collapse" aria-expanded="false" aria-controls="method-2-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-2-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Reads a <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> from the specified <a class="refdocgen-see-cref" href="./Newtonsoft.Json.JsonReader.html">JsonReader</a>.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.JsonReader.html" class="refdocgen-link-secondary">JsonReader</a></span><span>&#xA0;reader</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>The <a class="refdocgen-see-cref" href="./Newtonsoft.Json.JsonReader.html">JsonReader</a> containing the JSON Schema to read.</div></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"><div>The <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> object representing the JSON Schema.</div></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="Read(Newtonsoft.Json.JsonReader,Newtonsoft.Json.Schema.JsonSchemaResolver)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public static</span>
+
+<span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span>
+
+<span class="refdocgen-text-primary">Read</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.JsonReader.html" class="refdocgen-link-secondary">JsonReader</a></span><span>&#xA0;reader</span><span>, </span>
+            <wbr><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchemaResolver.html" class="refdocgen-link-secondary">JsonSchemaResolver</a></span><span>&#xA0;resolver</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#Read(Newtonsoft.Json.JsonReader,Newtonsoft.Json.Schema.JsonSchemaResolver)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-3-collapse" aria-expanded="false" aria-controls="method-3-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-3-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Reads a <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> from the specified <a class="refdocgen-see-cref" href="./Newtonsoft.Json.JsonReader.html">JsonReader</a>.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.JsonReader.html" class="refdocgen-link-secondary">JsonReader</a></span><span>&#xA0;reader</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>The <a class="refdocgen-see-cref" href="./Newtonsoft.Json.JsonReader.html">JsonReader</a> containing the JSON Schema to read.</div></div></div><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchemaResolver.html" class="refdocgen-link-secondary">JsonSchemaResolver</a></span><span>&#xA0;resolver</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>The <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchemaResolver.html">JsonSchemaResolver</a> to use when resolving schema references.</div></div></div></div></div><div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchema.html" class="refdocgen-link-secondary">JsonSchema</a></span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"><div>The <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchema.html">JsonSchema</a> object representing the JSON Schema.</div></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="ToString" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public override</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span>
+
+<span class="refdocgen-text-primary">ToString</span><span>(</span><wbr><span>)</span></span>
+
+                            <a class="anchor-link" href="#ToString">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-4-collapse" aria-expanded="false" aria-controls="method-4-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-4-collapse">
+
+                    
+
+                    <div class="refdocgen-text-tertiary fst-italic ms-3 mb-2 text-break" data-id="member-overrides">
+            Overrides
+            <span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.object.tostring" class="refdocgen-link-secondary"><span class="not-visible" data-language="csharp-lang">object.ToString</span></a></span></div>
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Returns a <a class="refdocgen-see-cref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> that represents the current <a class="refdocgen-see-cref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Returns</div>
+    <div class="mx-3" data-id="returns-section"><samp data-id="return-type-name"><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.string" class="refdocgen-link-secondary">string</a></span></span></samp>
+        <div class="text-body-secondary fst-italic" data-id="returns-doc"><div>
+            A <a class="refdocgen-see-cref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> that represents the current <a class="refdocgen-see-cref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>.
+            </div></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WriteTo(Newtonsoft.Json.JsonWriter)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.void" class="refdocgen-link-secondary">void</a></span>
+
+<span class="refdocgen-text-primary">WriteTo</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.JsonWriter.html" class="refdocgen-link-secondary">JsonWriter</a></span><span>&#xA0;writer</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WriteTo(Newtonsoft.Json.JsonWriter)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-5-collapse" aria-expanded="false" aria-controls="method-5-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-5-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Writes this schema to a <a class="refdocgen-see-cref" href="./Newtonsoft.Json.JsonWriter.html">JsonWriter</a>.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.JsonWriter.html" class="refdocgen-link-secondary">JsonWriter</a></span><span>&#xA0;writer</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>A <a class="refdocgen-see-cref" href="./Newtonsoft.Json.JsonWriter.html">JsonWriter</a> into which this method will write.</div></div></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div><div class="border px-2 py-1 mb-2" id="WriteTo(Newtonsoft.Json.JsonWriter,Newtonsoft.Json.Schema.JsonSchemaResolver)" data-id="member-data"><div class="d-flex justify-content-between align-items-center"><h6 class="mb-0 text-break" data-id="member-declaration"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-tertiary">public</span>
+
+<span class="refdocgen-text-secondary"><a href="https://learn.microsoft.com/dotnet/api/system.void" class="refdocgen-link-secondary">void</a></span>
+
+<span class="refdocgen-text-primary">WriteTo</span><span>(</span><wbr><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.JsonWriter.html" class="refdocgen-link-secondary">JsonWriter</a></span><span>&#xA0;writer</span><span>, </span>
+            <wbr><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchemaResolver.html" class="refdocgen-link-secondary">JsonSchemaResolver</a></span><span>&#xA0;resolver</span><span>)</span></span>
+
+                            <a class="anchor-link" href="#WriteTo(Newtonsoft.Json.JsonWriter,Newtonsoft.Json.Schema.JsonSchemaResolver)">#</a></samp></h6>
+
+                    <button class="btn btn-sm" data-bs-toggle="collapse" data-bs-target="#method-6-collapse" aria-expanded="false" aria-controls="method-6-collapse"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"></path></svg></button></div>
+
+                <div class="collapse show multi-collapse" id="method-6-collapse">
+
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="text-body-secondary fst-italic mb-0" data-id="summary-doc"><div>
+            Writes this schema to a <a class="refdocgen-see-cref" href="./Newtonsoft.Json.JsonWriter.html">JsonWriter</a> using the specified <a class="refdocgen-see-cref" href="./Newtonsoft.Json.Schema.JsonSchemaResolver.html">JsonSchemaResolver</a>.
+            </div></div>
+
+                    
+
+                    <div class="mt-3"><div class="lead">Parameters</div>
+        <div class="mx-3" data-id="parameters-section"><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.JsonWriter.html" class="refdocgen-link-secondary">JsonWriter</a></span><span>&#xA0;writer</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>A <a class="refdocgen-see-cref" href="./Newtonsoft.Json.JsonWriter.html">JsonWriter</a> into which this method will write.</div></div></div><div data-id="parameter-data">
+
+                    <div data-id="parameter-declaration" class="text-break"><samp><span class="not-visible" data-language="csharp-lang"><span class="refdocgen-text-secondary"><a href="./Newtonsoft.Json.Schema.JsonSchemaResolver.html" class="refdocgen-link-secondary">JsonSchemaResolver</a></span><span>&#xA0;resolver</span></span></samp></div>
+
+                    <div class="text-body-secondary fst-italic mb-2" data-id="parameter-doc"><div>The resolver used.</div></div></div></div></div>
+
+                    
+                    
+
+                    
+
+                    
+
+                    
+
+                    <div class="mt-1"></div></div></div></div></div></div><nav class="navbar fixed-bottom menu-bg"><div class="container"><div class="dropup"><button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">v-newtonsoft</button>
+            <div id="current-version">v-newtonsoft</div>
+            <div id="version-list">[&quot;v-newtonsoft&quot;]</div>
+            <ul class="dropdown-menu" id="version-selector" data-id="version-selector"></ul></div></div></nav><script src="../Static/bootstrap-5.3.5-dist.bundle.min.js"></script>
+
+    
+    <script src="../Static/script.js"></script></body></html>
